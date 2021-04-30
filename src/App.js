@@ -1,23 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react';
+import Header from './components/Header';
+import Input from './components/Input';
+import Todos from './components/Todos';
+import ListHeader from './components/ListHeader';
 
 function App() {
+  const [todos, setTodos] = useState([])
+
+  
+
+  const addTodo = (input) => {
+    const id = todos.map((todo) => todos.indexOf(todo))
+    
+    
+    const todo = {
+      id: id,
+      body: input
+    }
+    
+    setTodos([...todos, todo]);
+  }
+
+  const deleteTodo = (id) => {
+    const filteredArr = todos.filter((todo) => todo.id !== id);
+
+    setTodos(filteredArr);
+
+
+  }
+  
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <Input onAdd={addTodo}/>
+      {todos.length ? <ListHeader /> : null}
+      <Todos todos={todos} deleteTodo={deleteTodo}/>
     </div>
   );
 }
